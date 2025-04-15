@@ -4,7 +4,7 @@ resource "aws_vpc" "minha_vpc" {
   instance_tenancy = "default"
 
   tags = {
-    Name = "spfc-vpc"
+    Name = "spfc-vp-teste"
   }
 }
 
