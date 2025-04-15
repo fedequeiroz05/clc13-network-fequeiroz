@@ -4,7 +4,7 @@ resource "aws_vpc" "minha_vpc" {
   instance_tenancy = "default"
 
   tags = {
-    Name = "spfc-vp-teste"
+    Name = "spfc-vp"
   }
 }
 
@@ -171,4 +171,21 @@ resource "aws_nat_gateway" "nat_gw_1b" {
   # To ensure proper ordering, it is recommended to add an explicit dependency
   # on the Internet Gateway for the VPC.
   depends_on = [aws_internet_gateway.igw]
+}
+
+# Correcao primeira issue
+resource "aws_flow_log" "example" {
+  log_destination      = "arn:aws:s3:::fedaher-clc13-network-state"
+  log_destination_type = "s3"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.minha_vpc.id
+}
+
+# Correcao segunda issue
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.minha_vpc.id
+  
+  tags = {
+    Name = "my-iac-sg"
+  }
 }
